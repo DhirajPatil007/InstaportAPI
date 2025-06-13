@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "qK6XsdhQeephMcokSuT4aWocg/2aGm6DDMtv+7kxf9I=",
+  "Source": "InstaportApi",
+  "BasePath": "_content/InstaportApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

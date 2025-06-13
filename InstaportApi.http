@@ -1,0 +1,6 @@
+@InstaportApi_HostAddress = http://localhost:5268
+
+GET {{InstaportApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
