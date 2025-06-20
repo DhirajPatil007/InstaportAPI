@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace InstaportApi.Models;
 
@@ -40,6 +39,7 @@ public partial class order_addresses
 
     public double? distance { get; set; }
 
-    [JsonIgnore]
+    public int? add_seq { get; set; }
+
     public virtual orders? order { get; set; }
 }

@@ -12,6 +12,8 @@ public partial class AppDbContext : DbContext
     {
     }
 
+    public virtual DbSet<MessageCentralToken> MessageCentralToken { get; set; }
+
     public virtual DbSet<admin> admin { get; set; }
 
     public virtual DbSet<cities> cities { get; set; }
@@ -38,16 +40,34 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<rider_documents> rider_documents { get; set; }
 
+    public virtual DbSet<rider_penalty> rider_penalty { get; set; }
+
+    public virtual DbSet<rider_pointsystem> rider_pointsystem { get; set; }
+
     public virtual DbSet<rider_transactions> rider_transactions { get; set; }
 
     public virtual DbSet<riders> riders { get; set; }
 
     public virtual DbSet<transactions> transactions { get; set; }
 
+    public virtual DbSet<user_penalty> user_penalty { get; set; }
+
+    public virtual DbSet<user_pointsystem> user_pointsystem { get; set; }
+
     public virtual DbSet<users> users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<MessageCentralToken>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__MessageC__3214EC07269614F9");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.ExpiresAt).HasColumnType("datetime");
+        });
+
         modelBuilder.Entity<admin>(entity =>
         {
             entity.HasKey(e => e._id).HasName("PK__admin__DED88B1C185C123A");
@@ -226,6 +246,38 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK__rider_doc__rider__395884C4");
         });
 
+        modelBuilder.Entity<rider_penalty>(entity =>
+        {
+            entity.HasKey(e => e.riderpenaltyid);
+
+            entity.Property(e => e.datecreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.events)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.penaltypoints).HasDefaultValue(0);
+            entity.Property(e => e.riderid)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<rider_pointsystem>(entity =>
+        {
+            entity.HasKey(e => e.riderpointid);
+
+            entity.Property(e => e.datecreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.events)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.points).HasDefaultValue(0);
+            entity.Property(e => e.riderid)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<rider_transactions>(entity =>
         {
             entity.HasKey(e => e._id).HasName("PK__rider_tr__DED88B1CE534711A");
@@ -278,6 +330,38 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.amount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.razorpayPaymentId).HasMaxLength(100);
             entity.Property(e => e.type).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<user_penalty>(entity =>
+        {
+            entity.HasKey(e => e.userpenaltyid);
+
+            entity.Property(e => e.customerid)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.datecreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.events)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.penaltypoints).HasDefaultValue(0);
+        });
+
+        modelBuilder.Entity<user_pointsystem>(entity =>
+        {
+            entity.HasKey(e => e.userpointid).HasName("PK__user_poi__6C1BF1A198808EFB");
+
+            entity.Property(e => e.customerid)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.datecreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.events)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.points).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<users>(entity =>
