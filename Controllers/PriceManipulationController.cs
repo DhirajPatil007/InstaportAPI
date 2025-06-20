@@ -43,7 +43,7 @@ namespace InstaportApi.Controllers
         }
 
         // PUT: api/PriceManipulation
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] price_manipulations updatedPriceManipulation)
         {
             var price = await _context.price_manipulations

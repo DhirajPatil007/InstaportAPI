@@ -47,23 +47,75 @@ namespace InstaportApi.Controllers
 
         // PUT: api/orderaddresses/update
         // Update expects full order_address object with order_address_id set
+        // [HttpPut("update")]
+        // public async Task<IActionResult> UpdateAddress([FromBody] order_addresses updatedAddress)
+        // [HttpPut("update")]
+        // public async Task<IActionResult> UpdateAddress([FromBody] List<order_addresses> updatedAddress)
+
+        // {
+        //     if (updatedAddress == null || updatedAddress.order_address_id == Guid.Empty)
+        //         return BadRequest(new { error = true, message = "Invalid address data." });
+
+        //     var existingAddress = await _context.order_addresses
+        //         .FirstOrDefaultAsync(a => a.order_address_id == updatedAddress.order_address_id);
+
+        //     if (existingAddress == null)
+        //         return NotFound(new { error = true, message = "Address not found." });
+
+        //     _context.Entry(existingAddress).CurrentValues.SetValues(updatedAddress);
+
+        //     await _context.SaveChangesAsync();
+
+        //     return Ok(new { error = false, message = "Address updated successfully", address = updatedAddress });
+        // }
+        // [HttpPut("update")]
+        // public async Task<IActionResult> UpdateAddress([FromBody] List<order_addresses> updatedAddresses)
+        // {
+        //     if (updatedAddresses == null || updatedAddresses.Count == 0)
+        //         return BadRequest(new { error = true, message = "Invalid address data." });
+
+        //     foreach (var updatedAddress in updatedAddresses)
+        //     {
+        //         if (string.IsNullOrEmpty(updatedAddress.address))
+        //             return BadRequest(new { error = true, message = "Address is required." });
+
+        //         var existingAddress = await _context.order_addresses
+        //             .FirstOrDefaultAsync(a => a.address == updatedAddress.address);
+
+        //         if (existingAddress == null)
+        //             return NotFound(new { error = true, message = $"Address not found: {updatedAddress.address}" });
+
+        //         _context.Entry(existingAddress).CurrentValues.SetValues(updatedAddress);
+        //     }
+
+        //     await _context.SaveChangesAsync();
+        //     return Ok(new { error = false, message = "Addresses updated successfully." });
+        // }
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateAddress([FromBody] order_addresses updatedAddress)
+        public async Task<IActionResult> UpdateAddress([FromBody] List<order_addresses> updatedAddresses)
         {
-            if (updatedAddress == null || updatedAddress.order_address_id == Guid.Empty)
+            if (updatedAddresses == null || updatedAddresses.Count == 0)
                 return BadRequest(new { error = true, message = "Invalid address data." });
 
-            var existingAddress = await _context.order_addresses
-                .FirstOrDefaultAsync(a => a.order_address_id == updatedAddress.order_address_id);
+            foreach (var updatedAddress in updatedAddresses)
+            {
+                if (string.IsNullOrEmpty(updatedAddress.address))
+                    return BadRequest(new { error = true, message = "Address is required." });
 
-            if (existingAddress == null)
-                return NotFound(new { error = true, message = "Address not found." });
+                var existingAddress = await _context.order_addresses
+                    .FirstOrDefaultAsync(a => a.order_address_id == updatedAddress.order_address_id);
 
-            _context.Entry(existingAddress).CurrentValues.SetValues(updatedAddress);
+                if (existingAddress == null)
+                    return NotFound(new { error = true, message = $"Address not found: {updatedAddress.order_address_id}" });
+
+                _context.Entry(existingAddress).CurrentValues.SetValues(updatedAddress);
+            }
 
             await _context.SaveChangesAsync();
 
-            return Ok(new { error = false, message = "Address updated successfully", address = updatedAddress });
+            return Ok(new { error = false, message = "Addresses updated successfully." });
         }
+
+
     }
 }

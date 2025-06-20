@@ -102,14 +102,15 @@ namespace InstaportApi.Controllers
             var user = await _context.users.FindAsync(id);
             if (user == null)
                 return NotFound(new { message = "User not found." });
- 
+
             user.holdAmount = holdAmount;
             user.updatedAt = DateTime.UtcNow;
- 
+
             await _context.SaveChangesAsync();
- 
+
             return Ok(new { message = "Hold amount updated successfully." });
         }
+
 
         [HttpGet("me/{userId}")]
         public async Task<IActionResult> GetUser(Guid userId)

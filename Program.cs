@@ -37,6 +37,16 @@ builder.Services.AddScoped<IPasswordHasher<riders>, PasswordHasher<riders>>();
 
 builder.Services.AddDbContext<InstaportApi.Data.AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+      builder.Services.AddCors(options =>
+{
+options.AddPolicy("AllowAll", builder =>
+{
+builder.AllowAnyOrigin()
+.AllowAnyHeader()
+.AllowAnyMethod();
+});
+});  
     
 var app = builder.Build();
 
@@ -48,7 +58,7 @@ var app = builder.Build();
 // }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 
