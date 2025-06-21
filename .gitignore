@@ -1,3 +1,5 @@
 bin/Debug/net8.0/InstaportApi.dll
 bin/
 obj/
+obj/Debug/net8.0/refint/InstaportApi.dll
+obj/Debug/net8.0/ref/InstaportApi.dll

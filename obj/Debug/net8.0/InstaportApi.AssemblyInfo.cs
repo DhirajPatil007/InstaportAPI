@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InstaportApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ae8d5902c5c6a0db9bb0eac799a510d3c1d087b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b918d113a2947542263cdffd42a1e91439596cbf")]
 [assembly: System.Reflection.AssemblyProductAttribute("InstaportApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InstaportApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

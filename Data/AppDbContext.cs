@@ -40,6 +40,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<rider_documents> rider_documents { get; set; }
 
+    public virtual DbSet<rider_feedbacks> rider_feedbacks { get; set; }
+
     public virtual DbSet<rider_penalty> rider_penalty { get; set; }
 
     public virtual DbSet<rider_pointsystem> rider_pointsystem { get; set; }
@@ -49,6 +51,8 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<riders> riders { get; set; }
 
     public virtual DbSet<transactions> transactions { get; set; }
+
+    public virtual DbSet<user_feedbacks> user_feedbacks { get; set; }
 
     public virtual DbSet<user_penalty> user_penalty { get; set; }
 
@@ -246,6 +250,27 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK__rider_doc__rider__395884C4");
         });
 
+        modelBuilder.Entity<rider_feedbacks>(entity =>
+        {
+            entity.HasKey(e => e.riderfeedbackid);
+
+            entity.Property(e => e.feedback)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.feedbackdate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.feedbackgivenuserid)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.orderid)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.riderId)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<rider_penalty>(entity =>
         {
             entity.HasKey(e => e.riderpenaltyid);
@@ -330,6 +355,27 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.amount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.razorpayPaymentId).HasMaxLength(100);
             entity.Property(e => e.type).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<user_feedbacks>(entity =>
+        {
+            entity.HasKey(e => e.userfeedbackid);
+
+            entity.Property(e => e.feedback)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.feedbackdate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.feedbackgivenriderid)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.orderid)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.userid)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<user_penalty>(entity =>
